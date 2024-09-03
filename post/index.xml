@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Posts on kserks&#39;s blog</title>
+    <link>http://localhost:1313/posts/</link>
+    <description>Recent content in Posts on kserks&#39;s blog</description>
+    <image>
+      <title>kserks&#39;s blog</title>
+      <url>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- 0.133.0</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 02 Sep 2024 16:05:37 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>NGINX启用HTTP3</title>
+      <link>http://localhost:1313/posts/nginx-http3/</link>
+      <pubDate>Mon, 02 Sep 2024 16:05:37 +0800</pubDate>
+      <guid>http://localhost:1313/posts/nginx-http3/</guid>
+      <description>在NGINX上启用HTTP/3的注意事项 HTTP/3简介 HTTP/3是HTTP（超文本传输协议）协议的第三代标准，它标志着HTTP协议自HTTP/2以来的首次重大升级。HTTP/3引入了基于UDP（用户数据报协议）的新传输层协议QUIC，旨在解决TCP在网络性能上的局限性，特别是针对移动设备频繁切换网络环境的需求。QUIC协议不仅继承了TCP的可靠性特性，还引入了UDP的灵活性和速度优势，从而克服了TCP的队头阻塞（Head-of-Line Blocking）问题，提高了连接建立速度，并支持零往返时间（0-RTT）的数据传输。
+相对于HTTP/2协议，HTTP/3协议带来了重大的升级。它放弃了以往HTTP协议采用的TCP数据传输协议，转而采用了基于UDP数据传输协议的QUIC。QUIC协议的设计初衷是为了克服TCP在面对数据包丢失或网络延迟时导致的整体性能下降问题，即所谓的“队头阻塞”。通过在UDP基础上重新实现TCP的可靠性机制，QUIC允许独立的数据流在遭遇网络拥塞时仅阻塞受影响的那一路数据，而非整个连接，这显著缓解了TCP协议导致的“队头阻塞”问题。
+此外，HTTP/3实现了全链路默认加密，这一新特性增强了数据传输的安全性。在传统的TCP连接中，加密与传输层是分离的，这意味着TCP连接可以携带加密或非加密的数据，而握手过程与加密过程是分开的。在QUIC中，加密是在传输层进行的，这意味着应用层的数据始终处于加密状态，这不仅提高了安全性，还减少了握手过程中的延迟。
+QUIC协议的优势 QUIC协议通过将HTTP/2的一些概念引入到传输层，解决了TCP的队头阻塞问题。这意味着当某个数据包在网络中丢失或严重延迟时，QUIC能够区分不同流的数据，并且不会因为一个流的数据包丢失而阻碍其他流的数据传输。这种机制使得QUIC能够更好地支持移动设备频繁切换网络的场景，因为QUIC可以在网络切换时不中断连接。
+性能提升 HTTP/3与QUIC的结合带来了若干性能上的改进。首先，QUIC减少了建立连接所需的时间，这得益于它将加密和传输握手整合为一次握手，从而减少了延迟。其次，QUIC支持零往返时间（0-RTT）连接建立，对于已经建立了信任关系的客户端和服务器之间，客户端可以在首次握手之前就开始发送数据，大大加快了数据传输的速度。最后，QUIC对拥塞控制的改进使得它在网络拥塞时能够更快地调整传输速率，从而优化了网络资源的使用。
+综上所述，HTTP/3与QUIC的组合通过解决TCP的固有问题，为Web性能带来了实质性的改善。尽管这种改善在大多数情况下可能不如预期的那么显著，尤其是在网络状况良好的环境中，但对于那些面临较高丢包率或网络不稳定情况的应用来说，这些改进可以带来显著的好处。
+NGINX上安装HTTP/3模块 在 NGINX 官方文档上已经声明，在 NGINX-1.25.0 正式引入 HTTP/3 与 QUIC 并作为实验性的一部分受到支持。由于 Openssl 并不支持早期数据，所以在安装时要指定支持QUIC 协议的SSL数据库。例如例如 BoringSSL、LibreSSL或 QuicTLS。
+首先，我们需要编译安装NGINX软件，下面，我将简单说明在下载安装之前的准备工作。
+该示例的操作系统为 Ubuntu 22.04.4 LTS。
+#更新软件源 sudo apt-get update #更新所有软件 sudo apt-get upgrade #安装必要软件 sudo apt-get install wegt vim build-essential libpcre3 libpcre3-dev zlib1g zlib1g-dev libssl-dev libgd-dev libxml2 libxml2-dev uuid-dev -y #创建工作目录 cd / &amp;amp;&amp;amp; sudo mkdir work &amp;amp;&amp;amp; cd work #下载大于等于1.25.0版本的NGINX，下面以1.26.2为例 #NGINX下载页面 https://nginx.org/en/download.html wget https://nginx.</description>
+    </item>
+  </channel>
+</rss>
